@@ -1,8 +1,14 @@
-if (window.location.hostname === '9869072-copy2.cargo.site') {
+// auth-script.js
+
+// Verificar si estamos en el editor de Cargo
+const isInCargoEditor = window.self !== window.top;
+
+if (!isInCargoEditor && window.location.hostname === '9869072-copy2.cargo.site') {
   const currentUrl = window.location.href;
   const token = localStorage.getItem('access_token');
 
   if (!token && !currentUrl.includes('/auth-callback')) {
+    // Redirigir al login de Cognito si no hay token
     window.location.href = 'https://canprosaprova3.auth.eu-west-3.amazoncognito.com/login?client_id=3cug2g9160r7a9ktdrp4hhvp8&response_type=code&scope=email+openid+profile&redirect_uri=https://9869072-copy1.cargo.site/auth-callback';
   } else if (currentUrl.includes('/auth-callback')) {
     const urlParams = new URLSearchParams(window.location.search);
